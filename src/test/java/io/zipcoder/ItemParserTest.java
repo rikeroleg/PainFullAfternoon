@@ -43,7 +43,7 @@ public class ItemParserTest {
 
     @Test(expected = ItemParseException.class)
     public void parseBrokenStringIntoItemTest() throws ItemParseException{
-        itemParser.parseStringIntoItem(rawBrokenSingleItem);
+        itemParser.parseStringIntoItem(rawSingleItem);
     }
 
     @Test
@@ -58,5 +58,10 @@ public class ItemParserTest {
         Integer expected = 4;
         Integer actual = itemParser.findKeyValuePairsInRawItemData(rawSingleItemIrregularSeperatorSample).size();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getPriceTest(){
+
     }
 }

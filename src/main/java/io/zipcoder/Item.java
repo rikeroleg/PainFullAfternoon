@@ -1,5 +1,7 @@
 package io.zipcoder;
 
+import java.util.regex.Pattern;
+
 public class Item {
     private String name;
     private Double price;
@@ -22,20 +24,20 @@ public class Item {
         this.expiration = expiration;
     }
 
+    public Item(String name, String price) {
+    }
+
     public String getName() {
         return name;
     }
-
 
     public Double getPrice() {
         return price;
     }
 
-
     public String getType() {
         return type;
     }
-
 
     public String getExpiration() {
         return expiration;

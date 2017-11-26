@@ -9,6 +9,11 @@ import java.util.regex.Pattern;
 public class ItemParser {
 
 
+    private String name;
+    private Double price;
+    private String type;
+    private String expiration;
+
     public ArrayList<String> parseRawDataIntoStringArray(String rawData){
         String stringPattern = "##";
         ArrayList<String> response = splitStringWithRegexPattern(stringPattern , rawData);
@@ -16,15 +21,18 @@ public class ItemParser {
     }
 
     public Item parseStringIntoItem(String rawItem) throws ItemParseException{
-
-
-
-
-        
-
-
-
-       return null;
+        ArrayList<String> key = findKeyValuePairsInRawItemData(rawItem);
+        for (String pair: key){
+            if (pair.matches("[nameNAME]{4}"))
+                name = this.name(pair);
+            if(pair.matches("[pricePrice]{5}]"))
+                price = this.price(pair);
+            if(pair.matches("[typeTYPE]{4}"))
+                type = this.type(pair);
+            if(pair.matches("[expriationEXPIRATION]{10}"))
+                expiration = this.expiration(pair);
+        }
+       return new Item(name, price, type, expiration);
     }
 
 
@@ -49,7 +57,7 @@ public class ItemParser {
         return name;
     }
 
-    public String price(String price){
+    public Double price(String price){
         Pattern pattern = Pattern.compile("[pricePrice]{5}]");
         StringBuilder stringBuilder = new StringBuilder(price);
         Matcher matcher = pattern.matcher(stringBuilder);
@@ -57,7 +65,7 @@ public class ItemParser {
             stringBuilder.replace(matcher.start(), matcher.end(), "Price");
         }
         price = stringBuilder.toString();
-        return price;
+        return Double.valueOf(price);
     }
 
     public String type(String type){

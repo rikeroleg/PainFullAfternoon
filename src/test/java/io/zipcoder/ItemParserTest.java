@@ -34,12 +34,12 @@ public class ItemParserTest {
         assertEquals(expectedArraySize, actualArraySize);
     }
 
-//    @Test
-//    public void parseStringIntoItemTest() throws ItemParseException{
-//        Item expected = new Item("milk", 3.23, "food","1/25/2016");
-//        Item actual = itemParser.parseStringIntoItem(rawSingleItem);
-//        assertEquals(expected.toString(), actual.toString());
-//    }
+    @Test
+    public void parseStringIntoItemTest() throws ItemParseException{
+        Item expected = new Item("milk", 3.23, "food","1/25/2016");
+        Item actual = itemParser.parseStringIntoItem(rawMultipleItems);
+        assertEquals(expected.toString(), actual.toString());
+    }
 
     @Test(expected = ItemParseException.class)
     public void parseBrokenStringIntoItemTest() throws ItemParseException{
@@ -64,17 +64,45 @@ public class ItemParserTest {
     public void MyStringToItemTest() throws ItemParseException{
         String item = "naMe:Milk;price:3.23;type:Food;expiration:1/25/2016";
         String expected = "";
-        String actual = itemParser.parseStringIntoItem(item);
+        Item actual = itemParser.parseStringIntoItem(item);
         Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void nameTest() throws ItemParseException {
-        String name = "naMe:apples;price:3.23;type:Food;expiration:1/25/2016";
-        ArrayList<String> keyValuePairsInRawItemData = itemParser.findKeyValuePairsInRawItemData(name);
+        //String name = "naMe:apples;price:3.23;type:Food;expiration:1/25/2016";
+        ArrayList<String> keyValuePairsInRawItemData = itemParser.findKeyValuePairsInRawItemData(rawMultipleItems);
         String item = keyValuePairsInRawItemData.get(0);
-        String expected = "Food";
-        String actual = itemParser.name(item);
+        String expected = "";
+        String actual = itemParser.nameParsed(item);
+        System.out.println(item);
+
         Assert.assertEquals(expected , actual);
+    }
+
+    @Test
+    public void priceTest(){
+        Double expected = 3.23;
+        Double actual = itemParser.price(rawSingleItem);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void typeTest(){
+        //String name = "naMe:apples;price:3.23;type:Food;expiration:1/25/2016";
+
+        ArrayList<String> keyValuePairsInRawItemData = itemParser.parseRawDataIntoStringArray(rawMultipleItems);
+        String item = keyValuePairsInRawItemData.get(2);
+        String expected = "Fod";
+        String actual = itemParser.type(item);
+        System.out.println(actual);
+        Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void expirationTest(){
+        String expected = "";
+        String actual = itemParser.expiration(rawMultipleItems);
+        Assert.assertEquals(expected, actual);
     }
 }

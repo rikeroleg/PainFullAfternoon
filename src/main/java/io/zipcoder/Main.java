@@ -32,15 +32,17 @@ public class Main {
 //        }
 
         ArrayList<ArrayList<String>> eachItem = new ArrayList<>();
-        
+
         for (String item : items){
             ArrayList<String> itemArray = itemParser.findKeyValuePairsInRawItemData(item);
             eachItem.add(itemArray);
         }
 
-        for (ArrayList<String> itemdetail : eachItem){
-            System.out.println(itemdetail);
+        for (ArrayList<String> itemDetail : eachItem){
+            System.out.println(itemDetail);
+
         }
+
         //System.out.println(test);
     }
 }

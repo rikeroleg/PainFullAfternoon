@@ -16,26 +16,31 @@ public class ItemParser {
 
     public ArrayList<String> parseRawDataIntoStringArray(String rawData){
         String stringPattern = "##";
-        ArrayList<String> response = splitStringWithRegexPattern(stringPattern , rawData);
+        ArrayList<String> response = splitStringWithRegexPattern(stringPattern , String.valueOf(rawData));
         return response;
     }
 
-    public String parseStringIntoItem(String rawItem) throws ItemParseException{
+    public Item parseStringIntoItem(String rawItem) throws ItemParseException{
+        rawItem = rawItem.replaceAll("#", "");
         ArrayList<String> keyValuePairsInRawItemData = findKeyValuePairsInRawItemData(rawItem);
-        System.out.println(keyValuePairsInRawItemData);
+       // System.out.println(keyValuePairsInRawItemData);
         for (String pair: keyValuePairsInRawItemData){
             //System.out.println(pair);
             if (pair.matches("[nameNAME]{4}"))
-                this.name = "test";
+                name = this.nameParsed(pair);
+            System.out.println(pair);
             if(pair.matches("[pricePrice]{5}]"))
                 price = this.price(pair);
-            if(pair.matches("(?i)(^type:)"))
+            System.out.println(pair);
+            if(pair.matches("[type]{4}"))
                 type = this.type(pair);
+            System.out.println(pair);
             if(pair.matches("[expriationEXPIRATION]{10}"))
                 expiration = this.expiration(pair);
+            System.out.println(pair);
         }
-       //return new Item(name, price, type, expiration);
-        return name;
+       return new Item(name, price, type, expiration);
+        //return name;
     }
 
 
@@ -49,9 +54,9 @@ public class ItemParser {
         return new ArrayList<String>(Arrays.asList(inputString.split(stringPattern)));
     }
 
-     public String name(String value){
+     public String nameParsed(String value){
         String name = null;
-        value = value.replaceAll("(?i)(^name:)", "");
+        value = value.replaceAll("[~(nameNAME)~g]", "");
             if (value.matches("[milkMILK]{4}")){
                 name= "Milk";
             }
@@ -80,8 +85,8 @@ public class ItemParser {
 
     public String type(String value){
         String type = null;
-        value = value.replaceAll("(?i)(^type:)", "");
-        if(value.matches("[foodFOOD]{4}")) {
+        value = value.replaceAll("(?im)([type]{4})", "");
+        if(value.matches("(?im)([foodFOOD]{4})")) {
             type = "Food";
         }
         return type;
@@ -92,10 +97,11 @@ public class ItemParser {
         Pattern pattern = Pattern.compile("(\\d/\\d+/\\d+)");
         Matcher matcher = pattern.matcher(value);
         if (matcher.find()){
-            expiration = matcher.group(0);
+            expiration = matcher.group();
         }
         return expiration;
     }
+
 
 //    public String milk(String milk){
 //        Pattern pattern = Pattern.compile("[milkMILK]{4}");

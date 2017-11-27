@@ -13,6 +13,7 @@ public class ItemParser {
     private Double price;
     private String type;
     private String expiration;
+    private String milk;
 
     public ArrayList<String> parseRawDataIntoStringArray(String rawData){
         String stringPattern = "##";
@@ -20,19 +21,25 @@ public class ItemParser {
         return response;
     }
 
-    public Item parseStringIntoItem(String rawItem) throws ItemParseException{
-        ArrayList<String> key = findKeyValuePairsInRawItemData(rawItem);
-        for (String pair: key){
-            if (pair.matches("[nameNAME]{4}"))
+    public String parseStringIntoItem(String rawItem) throws ItemParseException{
+        ArrayList<String> keyValuePairsInRawItemData = findKeyValuePairsInRawItemData(rawItem);
+        for (String pair: keyValuePairsInRawItemData){
+            if (pair.matches(name))
                 name = this.name(pair);
-            if(pair.matches("[pricePrice]{5}]"))
+            if(pair.matches(String.valueOf(price(""))))
                 price = this.price(pair);
-            if(pair.matches("[typeTYPE]{4}"))
+            if(pair.matches(type("")))
                 type = this.type(pair);
-            if(pair.matches("[expriationEXPIRATION]{10}"))
+            if(pair.matches(expiration("")))
                 expiration = this.expiration(pair);
+            if (pair.matches(milk("")));
+                milk = this.milk(pair);
         }
-       return new Item(name, price, type, expiration);
+
+       return this.name;
+        //return name;
+
+       //return new Item(name, price, type, expiration);
     }
 
 
@@ -48,101 +55,107 @@ public class ItemParser {
 
     public String name(String name){
         Pattern pattern = Pattern.compile("[nameNAME]{4}");
-        StringBuilder stringBuilder = new StringBuilder(name);
-        Matcher matcher = pattern.matcher(stringBuilder);
+        String output = "";
+        Matcher matcher = pattern.matcher(output);
         while (matcher.find()){
-            stringBuilder.replace(matcher.start(), matcher.end(), "name");
+            output = matcher.group();
+            if (name.matches("[milkMILK]{4}")){
+                output = "Milk";
+            }
+            if (name.matches("[breadBREAD]{5}")){
+                output = "Bread";
+            }
+            if (name.matches("[cC]..[kK][iI][eE][sS]")){
+                output = "Cookies";
+            }
+            if (name.matches("[@applesAPPLES]{6}")){
+                output = "Apples";
+            }
+            else {
+                output = "test";
+            }
         }
-        name = stringBuilder.toString();
-        return name;
+        return output;
     }
 
     public Double price(String price){
         Pattern pattern = Pattern.compile("[pricePrice]{5}]");
-        StringBuilder stringBuilder = new StringBuilder(price);
-        Matcher matcher = pattern.matcher(stringBuilder);
+        String output = "";
+        Matcher matcher = pattern.matcher(price);
         while (matcher.find()){
-            stringBuilder.replace(matcher.start(), matcher.end(), "Price");
+            output = matcher.group(0);
         }
-        price = stringBuilder.toString();
-        return Double.valueOf(price);
+        return Double.valueOf(output);
     }
 
     public String type(String type){
         Pattern pattern = Pattern.compile("[typeTYPE]{4}");
-        StringBuilder stringBuilder = new StringBuilder(type);
-        Matcher matcher = pattern.matcher(stringBuilder);
+        String output = "";
+        Matcher matcher = pattern.matcher(type);
         while (matcher.find()){
-            stringBuilder.replace(matcher.start(), matcher.end(), "type");
+            output = matcher.group(0);
         }
-        type = stringBuilder.toString();
-        return type;
+        return output;
     }
 
     public String expiration(String expiration){
         Pattern pattern = Pattern.compile("[expriationEXPIRATION]{10}");
-        StringBuilder stringBuilder = new StringBuilder(expiration);
-        Matcher matcher = pattern.matcher(stringBuilder);
+        String output = "";
+        Matcher matcher = pattern.matcher(expiration);
         while (matcher.find()){
-            stringBuilder.replace(matcher.start(), matcher.end(), "expiration");
+            output = matcher.group(0);
         }
-        expiration = stringBuilder.toString();
-        return expiration;
+        return output;
     }
 
     public String milk(String milk){
         Pattern pattern = Pattern.compile("[milkMILK]{4}");
-        StringBuilder stringBuilder = new StringBuilder(milk);
-        Matcher matcher = pattern.matcher(stringBuilder);
+        String output = "";
+        Matcher matcher = pattern.matcher(milk);
         while (matcher.find()){
-            stringBuilder.replace(matcher.start(), matcher.end(), "Milk");
+            output = matcher.group(0);
         }
-        milk = stringBuilder.toString();
-        return milk;
+        return output;
     }
 
     public String bread(String bread){
         Pattern pattern = Pattern.compile("[breadBREAD]{5}");
-        StringBuilder stringBuilder = new StringBuilder(bread);
-        Matcher matcher = pattern.matcher(stringBuilder);
+        String output = "";
+        Matcher matcher = pattern.matcher(bread);
         while (matcher.find()){
-            stringBuilder.replace(matcher.start(), matcher.end(), "Bread");
+            output = matcher.group(0);
         }
-        bread = stringBuilder.toString();
-        return bread;
+        return output;
     }
 
     public String cookies(String cookies){
         Pattern pattern = Pattern.compile("[cC]..[kK][iI][eE][sS]");
-        StringBuilder stringBuilder = new StringBuilder(cookies);
-        Matcher matcher = pattern.matcher(stringBuilder);
+        String output = "";
+        Matcher matcher = pattern.matcher(cookies);
         while (matcher.find()){
-            stringBuilder.replace(matcher.start(), matcher.end(), "Cookies");
+            output = matcher.group(0);
         }
-        cookies = stringBuilder.toString();
-        return cookies;
+        return output;
     }
 
     public String apples(String apples){
         Pattern pattern = Pattern.compile("[@applesAPPLES]{6}");
-        StringBuilder stringBuilder = new StringBuilder(apples);
-        Matcher matcher = pattern.matcher(stringBuilder);
+        String output = "";
+        Matcher matcher = pattern.matcher(apples);
         while (matcher.find()){
-            stringBuilder.replace(matcher.start(), matcher.end(), "Apples");
+            output = matcher.group(0);
         }
-        apples = stringBuilder.toString();
-        return apples;
+        return output;
     }
 
     public String food(String food){
         Pattern pattern = Pattern.compile("([0fodFOD]{4})+.");
-        StringBuilder stringBuilder = new StringBuilder(food);
-        Matcher matcher = pattern.matcher(stringBuilder);
+        String output = "";
+        Matcher matcher = pattern.matcher(food);
         while (matcher.find()){
-            stringBuilder.replace(matcher.start(), matcher.end(), "Food");
+            output = matcher.group(0);
         }
-        food = stringBuilder.toString();
-        return food;
+        return output;
     }
 
 }

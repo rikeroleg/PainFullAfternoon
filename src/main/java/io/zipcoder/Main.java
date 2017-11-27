@@ -18,12 +18,29 @@ public class Main {
         //System.out.println(output);
 
         ItemParser itemParser = new ItemParser();
-        ArrayList<String> outputSeparated = itemParser.parseRawDataIntoStringArray(output);
+        //ArrayList<String> outputSeparated = itemParser.parseRawDataIntoStringArray(output);
 //
 //        for (String itemString: outputSeparated){
 //            System.out.println(itemString);
 //        }
 
         // TODO: parse the data in output into items, and display to console.
+        ArrayList<String> items = itemParser.parseRawDataIntoStringArray(output);
+//        ArrayList<String> items = itemParser.findKeyValuePairsInRawItemData(test);
+//        for (String item : items){
+//            System.out.println(item);
+//        }
+
+        ArrayList<ArrayList<String>> eachItem = new ArrayList<>();
+        
+        for (String item : items){
+            ArrayList<String> itemArray = itemParser.findKeyValuePairsInRawItemData(item);
+            eachItem.add(itemArray);
+        }
+
+        for (ArrayList<String> itemdetail : eachItem){
+            System.out.println(itemdetail);
+        }
+        //System.out.println(test);
     }
 }

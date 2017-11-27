@@ -70,11 +70,11 @@ public class ItemParserTest {
 
     @Test
     public void nameTest() throws ItemParseException {
-        String name = "naMe:milk;price:3.23;type:Food;expiration:1/25/2016";
-        //ArrayList<String> keyValuePairsInRawItemData = itemParser.findKeyValuePairsInRawItemData(name);
-        //String item = keyValuePairsInRawItemData.get(0);
-        String expected = "m";
-        String actual = itemParser.name(name);
+        String name = "naMe:apples;price:3.23;type:Food;expiration:1/25/2016";
+        ArrayList<String> keyValuePairsInRawItemData = itemParser.findKeyValuePairsInRawItemData(name);
+        String item = keyValuePairsInRawItemData.get(0);
+        String expected = "Food";
+        String actual = itemParser.name(item);
         Assert.assertEquals(expected , actual);
     }
 }

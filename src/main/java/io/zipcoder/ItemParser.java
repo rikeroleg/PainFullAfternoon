@@ -27,7 +27,7 @@ public class ItemParser {
         for (String pair: keyValuePairsInRawItemData){
             //System.out.println(pair);
             if (pair.matches("[nameNAME]{4}"))
-                name = this.nameParsed(pair);
+                name = this.name(pair);
             System.out.println(pair);
             if(pair.matches("[pricePrice]{5}]"))
                 price = this.price(pair);
@@ -54,7 +54,7 @@ public class ItemParser {
         return new ArrayList<String>(Arrays.asList(inputString.split(stringPattern)));
     }
 
-     public String nameParsed(String value){
+     public String name(String value){
         String name = null;
         value = value.replaceAll("[~(nameNAME)~g]", "");
             if (value.matches("[milkMILK]{4}")){
@@ -85,10 +85,11 @@ public class ItemParser {
 
     public String type(String value){
         String type = null;
-        value = value.replaceAll("(?im)([type]{4})", "");
-        if(value.matches("(?im)([foodFOOD]{4})")) {
+        value = value.replaceAll("[type]{4}", "");
+        if(value.matches("[fodFOD]{4}")) {
             type = "Food";
         }
+        System.out.println(type);
         return type;
     }
 

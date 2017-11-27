@@ -40,8 +40,8 @@ public class Main {
 
         for (ArrayList<String> itemDetail : eachItem){
             System.out.println(itemDetail);
-
         }
+
 
         //System.out.println(test);
     }

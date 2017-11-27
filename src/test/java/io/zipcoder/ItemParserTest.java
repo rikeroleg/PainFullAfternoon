@@ -74,7 +74,7 @@ public class ItemParserTest {
         ArrayList<String> keyValuePairsInRawItemData = itemParser.findKeyValuePairsInRawItemData(rawMultipleItems);
         String item = keyValuePairsInRawItemData.get(0);
         String expected = "";
-        String actual = itemParser.nameParsed(item);
+        String actual = itemParser.name(item);
         System.out.println(item);
 
         Assert.assertEquals(expected , actual);
@@ -89,14 +89,14 @@ public class ItemParserTest {
 
     @Test
     public void typeTest(){
-        //String name = "naMe:apples;price:3.23;type:Food;expiration:1/25/2016";
+        String name = "naMe:apples;price:3.23;type:Food;expiration:1/25/2016";
 
-        ArrayList<String> keyValuePairsInRawItemData = itemParser.parseRawDataIntoStringArray(rawMultipleItems);
-        String item = keyValuePairsInRawItemData.get(2);
+        //ArrayList<String> keyValuePairsInRawItemData = itemParser.findKeyValuePairsInRawItemData(name);
+        //String item = keyValuePairsInRawItemData.get(2);
         String expected = "Fod";
-        String actual = itemParser.type(item);
+        String actual = itemParser.type(name);
         System.out.println(actual);
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
